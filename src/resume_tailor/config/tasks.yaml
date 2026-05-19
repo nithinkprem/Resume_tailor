@@ -1,0 +1,69 @@
+analyze_jd:
+  description: >
+    Analyze the following job description and produce a structured brief:
+
+    {jd_text}
+
+    Your output must include:
+    - Role summary (2 sentences)
+    - Must-have skills (bulleted)
+    - Nice-to-have skills (bulleted)
+    - Keywords to mirror in the resume
+    - Tone of the company (e.g. startup-casual, enterprise-formal)
+
+  expected_output: >
+    A structured JD brief with role summary, must-haves, nice-to-haves,
+    keywords list, and company tone.
+
+  agent: jd_analyst
+
+critique_resume:
+  description: >
+    Using the JD brief produced by the previous task, review the following resume:
+
+    {resume_text}
+
+    Your output must include:
+    - Strong matches (what lines up well, with specific resume lines)
+    - Weak matches (present but not framed well)
+    - Missing keywords or experiences not found in the resume
+    - Overall relevance score out of 10 with a one-line justification
+
+  expected_output: >
+    A gap report listing strong matches, weak matches, missing keywords,
+    and a relevance score out of 10.
+
+  agent: resume_critic
+
+rewrite_resume:
+  description: >
+    Using the JD brief and gap report from the previous tasks,
+    rewrite the resume bullets from this original resume:
+
+    {resume_text}
+
+    Rules:
+    - Mirror JD keywords naturally — do not stuff them awkwardly
+    - Prioritise strengthening weak matches first
+    - Do NOT invent experience — only reposition what exists
+    - Keep the same sections (Experience, Skills, Education, etc.)
+    - Output the full rewritten resume in plain text
+  expected_output: >
+    A complete rewritten resume in plain text, tailored to the JD,
+    with all original sections preserved.
+  agent: rewrite_specialist
+
+write_cover_letter:
+  description: >
+    Using the tailored resume and the JD brief from the previous tasks,
+    write a cover letter.
+
+    Rules:
+    - Under 300 words
+    - Match the company tone identified by the JD Analyst
+    - Open with a strong hook (NOT "I am writing to apply for...")
+    - Highlight the top 2 most relevant experiences
+    - Close with a clear call to action
+  expected_output: >
+    A ready-to-send cover letter under 300 words, matching the company tone.
+  agent: cover_letter_writer
